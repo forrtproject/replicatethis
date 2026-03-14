@@ -2,33 +2,39 @@
 layout: base.njk
 title: Leaderboards
 ---
-<h1>Leaderboards</h1>
+<h1 style="margin-bottom: 5px;">Leaderboards</h1>
+<p style="font-size: 1.1rem; color: #555; margin-bottom: 30px;">
+  Disciplines and journals with the most approved nominations.
+</p>
 
-<div class="grid">
-  <div class="card">
-    <h3>Most Nominated Disciplines</h3>
-    <ul>
-      {% for discipline, count in leaderboards.disciplines %}
-        <li><strong>{{ discipline }}:</strong> {{ count }} nominations</li>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  
+  <div style="background: white; border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+    <h3 class="serif" style="margin-top: 0; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Most Nominated Disciplines</h3>
+    <ul style="line-height: 1.8; list-style-type: none; padding-left: 0;">
+      {% for item in leaderboards.disciplines %}
+        <li style="display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding: 5px 0;">
+          <strong>{{ item.name }}</strong> 
+          <span style="color: var(--link); font-weight: 600;">{{ item.count }}</span>
+        </li>
+      {% else %}
+        <li style="color: #666;">No discipline data available yet.</li>
       {% endfor %}
     </ul>
   </div>
 
-  <div class="card">
-    <h3>Most Nominated Journals</h3>
-    <ul>
-      {% for journal, count in leaderboards.journals %}
-        <li><strong>{{ journal }}:</strong> {{ count }} nominations</li>
+  <div style="background: white; border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+    <h3 class="serif" style="margin-top: 0; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Most Nominated Journals</h3>
+    <ul style="line-height: 1.8; list-style-type: none; padding-left: 0;">
+      {% for item in leaderboards.journals %}
+        <li style="display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding: 5px 0;">
+          <strong>{{ item.name }}</strong> 
+          <span style="color: var(--link); font-weight: 600;">{{ item.count }}</span>
+        </li>
+      {% else %}
+        <li style="color: #666;">No journal data available yet.</li>
       {% endfor %}
     </ul>
   </div>
-</div>
 
-<h2>Most Nominated Papers (By DOI)</h2>
-<div class="card">
-  <ul>
-    {% for doi, data in leaderboards.papers %}
-      <li><strong>{{ data.title }}</strong> ({{ doi }}) - <em>{{ data.count }} requests</em></li>
-    {% endfor %}
-  </ul>
 </div>
