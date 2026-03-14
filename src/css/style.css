@@ -4,6 +4,8 @@
   --link: #0366d6;
   --border: #e1e4e8;
   --card-bg: #fff;
+  --header-bg: #2ea44f; /* Friendly Green */
+  --header-text: #ffffff;
 }
 
 body {
@@ -21,11 +23,13 @@ body {
   padding: 0 20px;
 }
 
+/* Updated Green Header */
 header {
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 0;
+  background: var(--header-bg);
+  color: var(--header-text);
+  padding: 15px 0;
   margin-bottom: 40px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-bar {
@@ -34,10 +38,42 @@ header {
   align-items: center;
 }
 
-.nav-bar h1 { margin: 0; font-size: 1.5rem; }
-.nav-bar a { text-decoration: none; color: var(--text); margin-left: 15px; }
-.nav-bar a:hover { color: var(--link); }
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.logo {
+  width: 28px;
+  height: 28px;
+  color: var(--header-text);
+}
+
+.nav-bar h1 { margin: 0; font-size: 1.5rem; }
+
+/* Make header links white */
+.nav-bar a { 
+  text-decoration: none; 
+  color: var(--header-text); 
+  margin-left: 15px; 
+  font-weight: 500;
+  opacity: 0.9;
+}
+.nav-bar a:hover { opacity: 1; text-decoration: underline; }
+
+.nav-submit {
+  border: 1px solid white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+}
+.nav-submit:hover {
+  background: rgba(255,255,255,0.2);
+  text-decoration: none !important;
+}
+
+/* General Layout */
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
@@ -65,3 +101,12 @@ a:hover { text-decoration: underline; }
 }
 .statusapproved { background: #e6ffed; color: #22863a; border: 1px solid #22863a; }
 .typereplication { background: #f1f8ff; color: #0366d6; border: 1px solid #0366d6; }
+
+footer {
+  margin-top: 50px;
+  padding: 30px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: #666;
+}
