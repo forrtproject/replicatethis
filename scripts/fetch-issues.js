@@ -14,8 +14,6 @@ async function fetchIssues() {
     const res = await fetch(url, { headers });
     const issues = await res.json();
     const nominations = [];
-    
-    // Track counts for leaderboards
     const rawJournals = {};
     const rawDisciplines = {};
 
@@ -29,6 +27,7 @@ async function fetchIssues() {
 
       const parsed = parseIssueBody(issue.body);
       const repType = labels.includes('type: replication') ? 'Replication' : 'Reproduction';
+      const isClaimed = labels.includes('claimed'); // Check if claimed
       
       let discussion = [];
       if (issue.comments > 0) {
@@ -41,7 +40,6 @@ async function fetchIssues() {
         }));
       }
 
-      // Add to leaderboard counts
       if (parsed.Journal) rawJournals[parsed.Journal] = (rawJournals[parsed.Journal] || 0) + 1;
       if (parsed.Discipline) rawDisciplines[parsed.Discipline] = (rawDisciplines[parsed.Discipline] || 0) + 1;
 
@@ -52,6 +50,7 @@ async function fetchIssues() {
         date: issue.created_at,
         formattedDate: new Date(issue.created_at).toLocaleDateString(),
         type: repType,
+        isClaimed: isClaimed,
         nominator: issue.user.login,
         commentCount: issue.comments,
         discussion: discussion,
@@ -60,7 +59,6 @@ async function fetchIssues() {
       });
     }
 
-    // Sort leaderboards highest to lowest
     const sortLeaderboard = (obj) => Object.entries(obj)
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
