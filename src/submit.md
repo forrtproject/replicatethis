@@ -1,1 +1,0 @@
-[**Submit via GitHub Issue Form &rarr;**](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/issues/new/choose)
