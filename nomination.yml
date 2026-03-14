@@ -1,1 +1,67 @@
 
+name: Nominate a Paper
+description: Nominate a published research paper for replication or reproduction.
+title: "[Nomination]: "
+labels: ["status: pending"]
+body:
+  - type: input
+    id: doi
+    attributes:
+      label: DOI
+      description: The Digital Object Identifier of the paper (e.g., 10.1257/aer.20190539).
+      placeholder: "10.XXXX/XXXX"
+    validations:
+      required: true
+  - type: input
+    id: journal
+    attributes:
+      label: Journal
+      description: The journal where the paper was published.
+    validations:
+      required: true
+  - type: dropdown
+    id: discipline
+    attributes:
+      label: Discipline
+      options:
+        - Economics
+        - Psychology
+        - Political Science
+        - Sociology
+        - Medicine
+        - Computer Science
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: rep_type
+    attributes:
+      label: Replication vs Reproduction
+      description: Reproduction uses original data/code; Replication collects new data.
+      options:
+        - Reproduction
+        - Replication
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Scientific Justification
+      description: Why is this paper valuable to replicate/reproduce? (e.g., highly influential, surprising results, methodologically innovative). Must adhere to the Code of Conduct.
+    validations:
+      required: true
+  - type: textarea
+    id: data_location
+    attributes:
+      label: Data Location (if Reproduction)
+      description: Where is the original data located? (e.g., Harvard Dataverse link).
+  - type: textarea
+    id: robustness
+    attributes:
+      label: Suggested Robustness Checks
+      description: Are there specific alternative specifications you suggest?
+  - type: textarea
+    id: deviations
+    attributes:
+      label: Suggested Deviations from Original Design
+      description: If replicating, how should the new design differ from the original?
