@@ -5,7 +5,7 @@ labels: ["status: pending"]
 body:
   - type: markdown
     attributes:
-      value: "🚨 **Important Note:** All posters must respect the Code of Conduct or their nomination will not be approved. [Please read the Code of Conduct here](https://lukasroeseler.github.io/replicatethis/about/)."
+      value: "🚨 **Important Note:** All posters must respect the Code of Conduct or their nomination will not be approved. [Please read the Code of Conduct here](https://lukasroeseler.github.io/replicatethis/coc/)."
   - type: input
     id: doi
     attributes:
@@ -56,7 +56,7 @@ body:
     id: data_location
     attributes:
       label: Data Location (if Reproduction)
-      description: Where is the original data located? (e.g., Harvard Dataverse link).
+      description: Where is the original data located? (e.g., Zenodo, or OSF link).
   - type: textarea
     id: robustness
     attributes:
