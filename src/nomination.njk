@@ -6,33 +6,51 @@ pagination:
   alias: nom
 permalink: "nomination/{{ nom.id }}/"
 ---
-<!-- Notice the updated back-link below -->
-<a href="{{ '/browse/' | url }}" class="back-link">&larr; Back to Browse</a>
+<a href="{{ '/browse/' | url }}" class="back-link" style="display:inline-block; margin-bottom: 20px;">&larr; Back to Browse</a>
 
-<h1>{{ nom.title }}</h1>
-<div class="meta-box">
-  <p><strong>Authors:</strong> {{ nom.authors }}</p>
-  <p><strong>DOI:</strong> <a href="https://doi.org/{{ nom.DOI }}">{{ nom.DOI }}</a></p>
+<h1 style="margin-top: 0;">{{ nom.title }}</h1>
+<div class="meta-box" style="background: white; border-top: 3px solid var(--accent);">
+  <p><strong>Nominated by:</strong> <a href="https://github.com/{{ nom.nominator }}" target="_blank">@{{ nom.nominator }}</a></p>
+  <p><strong>DOI:</strong> <a href="https://doi.org/{{ nom.DOI }}" target="_blank">{{ nom.DOI }}</a></p>
   <p><strong>Journal:</strong> {{ nom.Journal }}</p>
   <p><strong>Discipline:</strong> {{ nom.Discipline }}</p>
-  <p><strong>Request Type:</strong> {{ nom['Replication vs Reproduction'] }}</p>
-  <p><strong>Original Issue:</strong> <a href="{{ nom.url }}">#{{ nom.id }} on GitHub</a></p>
+  <p><strong>Request Type:</strong> <span class="type-badge type-{{ nom.type | lower }}">{{ nom.type }}</span></p>
 </div>
 
-<h3>Scientific Justification</h3>
-<p>{{ nom['Scientific Justification'] | nl2br }}</p>
+<h3 class="serif">Scientific Justification</h3>
+<p style="white-space: pre-wrap;">{{ nom['Scientific Justification'] }}</p>
 
 {% if nom['Data Location (if Reproduction)'] %}
-<h3>Data Location</h3>
-<p>{{ nom['Data Location (if Reproduction)'] | nl2br }}</p>
+<h3 class="serif">Data Location</h3>
+<p style="white-space: pre-wrap;">{{ nom['Data Location (if Reproduction)'] }}</p>
 {% endif %}
 
 {% if nom['Suggested Robustness Checks'] %}
-<h3>Suggested Robustness Checks</h3>
-<p>{{ nom['Suggested Robustness Checks'] | nl2br }}</p>
+<h3 class="serif">Suggested Robustness Checks</h3>
+<p style="white-space: pre-wrap;">{{ nom['Suggested Robustness Checks'] }}</p>
 {% endif %}
 
 {% if nom['Suggested Deviations from Original Design'] %}
-<h3>Suggested Deviations</h3>
-<p>{{ nom['Suggested Deviations from Original Design'] | nl2br }}</p>
+<h3 class="serif">Suggested Deviations</h3>
+<p style="white-space: pre-wrap;">{{ nom['Suggested Deviations from Original Design'] }}</p>
 {% endif %}
+
+<!-- Comments Section -->
+<hr style="margin: 50px 0 30px 0; border: 0; border-top: 1px solid var(--border);">
+<h2 id="comments" class="serif">Comments</h2>
+
+{% if nom.commentCount == 0 %}
+  <p style="color: #666; margin-bottom: 20px;">No comments yet on this nomination.</p>
+{% else %}
+  <div style="margin-bottom: 20px;">
+    {% for comment in nom.discussion %}
+      <div style="background: white; padding: 20px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 15px;">
+        <strong style="color: var(--link);">@{{ comment.author }}</strong> 
+        <span style="color: #888; font-size: 0.85rem; margin-left: 10px;">{{ comment.date }}</span>
+        <div style="margin-top: 10px; font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap;">{{ comment.body }}</div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<a href="{{ nom.url }}" target="_blank" class="nav-submit" style="display: inline-block; font-size: 1rem;">Join discussion on GitHub &rarr;</a>
