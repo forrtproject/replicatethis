@@ -1,15 +1,15 @@
 ---
 layout: base.njk
-title: Open Replication Registry
+title: Replicate This
 templateEngineOverride: njk, md
 ---
 
-# Welcome to the Open Replication Registry
+# Welcome to Replicate This
 
 A community-driven, public registry for nominating published research papers that merit independent verification through replication or reproduction.
 
 [**Browse Nominations &rarr;**]({{ '/browse/' | url }})  
-[**Submit a Paper &rarr;**](https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml)
+[**Nominate a Study for Replication &rarr;**](https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml)
 
 ### How it works
 1. **Nominate:** Submit a structured GitHub Issue detailing a paper's DOI and why it should be replicated.
