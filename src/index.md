@@ -1,14 +1,14 @@
-
 ---
 layout: base.njk
 title: Open Replication Registry
+templateEngineOverride: njk, md
 ---
 # Welcome to the Open Replication Registry
 
 A community-driven, public registry for nominating published research papers that merit independent verification through replication or reproduction.
 
-[**Browse Nominations &rarr;**](/browse/)  
-[**Submit a Paper &rarr;**](/submit/)
+[**Browse Nominations &rarr;**]({{ '/browse/' | url }})  
+[**Submit a Paper &rarr;**]({{ '/submit/' | url }})
 
 ### How it works
 1. **Nominate:** Submit a structured GitHub Issue detailing a paper's DOI and why it should be replicated.
