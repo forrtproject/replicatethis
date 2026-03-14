@@ -1,1 +1,12 @@
 
+{
+  "name": "replication-registry",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node scripts/fetch-issues.js && eleventy",
+    "serve": "node scripts/fetch-issues.js && eleventy --serve"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
