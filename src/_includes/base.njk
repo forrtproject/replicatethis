@@ -6,16 +6,22 @@
   <title>{{ title | default("Replicate This") }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
+  <!-- Script block prevents dark mode flashing on page load -->
+  <script>
+    if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark-mode'); }
+  </script>
 </head>
 <body>
   <header>
     <div class="container nav-bar">
       <div class="logo-title">
-        <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
+        <!-- New "Pedestal/Spotlight" Logo -->
+        <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="6" r="3" fill="currentColor" stroke="none" />
+          <path d="M7 21l3-10h4l3 10" stroke-width="2" />
+          <line x1="5" y1="21" x2="19" y2="21" stroke-width="2" />
         </svg>
         <h1><a href="{{ '/' | url }}">Replicate This</a></h1>
       </div>
@@ -25,7 +31,12 @@
         <a href="{{ '/leaderboards/' | url }}">Leaderboards</a>
         <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" target="_blank" class="nav-submit">Nominate</a>
         <a href="{{ '/about/' | url }}">About</a>
-        <button id="darkModeToggle" class="dark-toggle" aria-label="Toggle Dark Mode">🌓</button>
+        <button id="darkModeToggle" class="dark-toggle" aria-label="Toggle Dark Mode">
+          <!-- Sun Icon -->
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <!-- Moon Icon -->
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </nav>
     </div>
   </header>
@@ -43,11 +54,10 @@
 
   <script>
     const toggle = document.getElementById('darkModeToggle');
-    const body = document.body;
-    if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
+    const doc = document.documentElement;
     toggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+      doc.classList.toggle('dark-mode');
+      localStorage.setItem('theme', doc.classList.contains('dark-mode') ? 'dark' : 'light');
     });
   </script>
 </body>
