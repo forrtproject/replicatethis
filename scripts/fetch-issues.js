@@ -19,7 +19,6 @@ async function fetchIssues() {
       if (issue.pull_request) continue;
 
       const labels = issue.labels.map(l => l.name.toLowerCase());
-      // ONLY include issues that have type: replication OR type: reproduction
       if (!labels.includes('type: replication') && !labels.includes('type: reproduction')) {
         continue;
       }
@@ -27,7 +26,6 @@ async function fetchIssues() {
       const parsed = parseIssueBody(issue.body);
       const repType = labels.includes('type: replication') ? 'Replication' : 'Reproduction';
       
-      // Fetch discussion comments
       let discussion = [];
       if (issue.comments > 0) {
         const commentsRes = await fetch(issue.comments_url, { headers });
@@ -43,9 +41,10 @@ async function fetchIssues() {
         id: issue.number,
         title: issue.title.replace('[Nomination]: ', ''),
         url: issue.html_url,
-        date: issue.created_at, // Raw date for sorting
+        date: issue.created_at,
         formattedDate: new Date(issue.created_at).toLocaleDateString(),
         type: repType,
+        nominator: issue.user.login, // Added nominator
         commentCount: issue.comments,
         discussion: discussion,
         ...parsed,
