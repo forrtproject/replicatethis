@@ -7,7 +7,7 @@ title: About Replicate This
 
 Replications and reproductions lie at the core of many research disciplines, and yet they are rarely conducted. We believe that the current culture of criticism makes it difficult to replicate. For example, a failed replication is sometimes seen as an attack on the original authors, when it should simply be viewed as a shared interest in better understanding scientific phenomena. 
 
-This registry exists to change the culture of criticism surrounding replications. With it, we want to support a constructive and collaborative culture around scientific replication and reproducibility.
+This registry exists to change the culture of criticism surrounding replications. With it, we want to support a constructive and collaborative culture around scientific replication and reproducibility. Note that the Journal of Robustness Reports already has a working version, which is similar to this at https://www.journalofrobustnessreports.org/leaderboard/. The idea behind this project is for it to be independent of single journals and apply to reproductions and replications from all research disciplines.
 
 ### The Value of Community
 We believe in the immense value of a collaborative research community. By providing this open-source infrastructure, we invite researchers across all disciplines to use it, nominate influential studies, and conduct highly valuable replications together.
