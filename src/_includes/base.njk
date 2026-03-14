@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title | default("Replication Registry") }}</title>
+  <title>{{ title | default("Replicate This") }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,14 +17,15 @@
           <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
           <path d="M3 3v5h5"/>
         </svg>
-        <h1><a href="{{ '/' | url }}">The Replication Registry</a></h1>
+        <h1><a href="{{ '/' | url }}">Replicate This</a></h1>
       </div>
       <nav>
         <a href="{{ '/' | url }}">Home</a>
         <a href="{{ '/browse/' | url }}">Browse Nominations</a>
         <a href="{{ '/leaderboards/' | url }}">Leaderboards</a>
-        <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" target="_blank" class="nav-submit">Submit Nomination</a>
+        <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" target="_blank" class="nav-submit">Nominate</a>
         <a href="{{ '/about/' | url }}">About</a>
+        <button id="darkModeToggle" class="dark-toggle" aria-label="Toggle Dark Mode">🌓</button>
       </nav>
     </div>
   </header>
@@ -39,5 +40,15 @@
       <p><a href="https://github.com/LukasRoeseler/replicatethis" target="_blank">View repository on GitHub</a></p>
     </div>
   </footer>
+
+  <script>
+    const toggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
+    toggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+    });
+  </script>
 </body>
 </html>
