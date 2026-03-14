@@ -1,1 +1,37 @@
+---
+layout: base.njk
+pagination:
+  data: nominations
+  size: 1
+  alias: nom
+permalink: "nomination/{{ nom.id }}/"
+---
+<a href="/browse/" class="back-link">&larr; Back to Browse</a>
 
+<h1>{{ nom.title }}</h1>
+<div class="meta-box">
+  <p><strong>Authors:</strong> {{ nom.authors }}</p>
+  <p><strong>DOI:</strong> <a href="https://doi.org/{{ nom.DOI }}">{{ nom.DOI }}</a></p>
+  <p><strong>Journal:</strong> {{ nom.Journal }}</p>
+  <p><strong>Discipline:</strong> {{ nom.Discipline }}</p>
+  <p><strong>Request Type:</strong> {{ nom['Replication vs Reproduction'] }}</p>
+  <p><strong>Original Issue:</strong> <a href="{{ nom.url }}">#{{ nom.id }} on GitHub</a></p>
+</div>
+
+<h3>Scientific Justification</h3>
+<p>{{ nom['Scientific Justification'] | nl2br }}</p>
+
+{% if nom['Data Location (if Reproduction)'] %}
+<h3>Data Location</h3>
+<p>{{ nom['Data Location (if Reproduction)'] | nl2br }}</p>
+{% endif %}
+
+{% if nom['Suggested Robustness Checks'] %}
+<h3>Suggested Robustness Checks</h3>
+<p>{{ nom['Suggested Robustness Checks'] | nl2br }}</p>
+{% endif %}
+
+{% if nom['Suggested Deviations from Original Design'] %}
+<h3>Suggested Deviations</h3>
+<p>{{ nom['Suggested Deviations from Original Design'] | nl2br }}</p>
+{% endif %}
