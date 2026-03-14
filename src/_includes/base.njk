@@ -14,7 +14,6 @@
   <header>
     <div class="container nav-bar">
       <div class="logo-title">
-        <!-- Smaller Circular Arrow Logo -->
         <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
           <path d="M3 3v5h5"/>
@@ -25,7 +24,8 @@
         <a href="{{ '/' | url }}">Home</a>
         <a href="{{ '/browse/' | url }}">Browse Nominations</a>
         <a href="{{ '/leaderboards/' | url }}">Leaderboards</a>
-        <a href="https://github.com/LukasRoeseler/replicatethis/issues" target="_blank" class="nav-submit">Submit Nomination</a>
+        <!-- Direct link to the issue form -->
+        <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" target="_blank" class="nav-submit">Submit Nomination</a>
         <a href="{{ '/about/' | url }}">About</a>
       </nav>
     </div>
