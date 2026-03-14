@@ -156,18 +156,21 @@ footer { margin-top: 60px; padding: 40px 0; text-align: center; border-top: 1px 
 .partner-logo-container {
   display: inline-block;
   background: white; /* Ensures transparent dark text logos stay visible */
-  padding: 15px 25px;
+  padding: 15px;
   border-radius: 8px;
   border: 1px solid var(--border);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: 10px;
+  width: 30%; /* Sets container to 30% of the text width */
+  min-width: 180px; /* Prevents it from getting too tiny on phones */
+  box-sizing: border-box;
 }
 .partner-logo-container:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .partner-logo {
-  max-width: 260px;
+  width: 100%; /* Scales perfectly inside the 30% container */
   height: auto;
   display: block;
 }
