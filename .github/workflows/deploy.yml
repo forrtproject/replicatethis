@@ -13,6 +13,10 @@ permissions:
   id-token: write
   issues: read
 
+# Add this global env variable to fix the Node 20 deprecation warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24' # Updated from 20 to 24
           
       - name: Install Dependencies
         run: npm install
@@ -30,7 +34,6 @@ jobs:
       - name: Build Eleventy Site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # This dynamically gets your repo name (e.g., /replication-registry/)
           PATH_PREFIX: /${{ github.event.repository.name }}/
         run: npm run build
         
