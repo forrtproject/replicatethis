@@ -6,7 +6,6 @@ templateEngineOverride: njk, md
 
 <div style="text-align: center; max-width: 700px; margin: 0 auto 60px auto;">
 
-  <!-- Changed from h2 to p to prevent it getting the headline frame box -->
   <p style="font-size: 2.2rem; font-style: italic; line-height: 1.4; margin-bottom: 30px; color: var(--text);">
     Informing the scientific process through collaborative reproduction and replication.
   </p>
