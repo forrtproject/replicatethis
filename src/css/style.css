@@ -33,12 +33,21 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-h1, h2, h3, h4 {
+/* --- Content Headlines with Frames --- */
+main h1, main h2, main h3 {
   font-weight: 400;
   color: var(--text);
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
+  border: 1px solid var(--border);
+  padding: 20px 30px;
+  margin-top: 2.5em;
+  margin-bottom: 1.5em;
+  background-color: var(--table-hover);
 }
+
+main h1 { font-size: 2.2rem; }
+main h2 { font-size: 1.8rem; }
+main h3 { font-size: 1.4rem; }
+h4, h5 { font-weight: 600; margin-top: 1.5em; margin-bottom: 0.5em; }
 
 .container {
   max-width: 900px;
@@ -47,27 +56,19 @@ h1, h2, h3, h4 {
 }
 
 /* --- HEADER Redesign --- */
-.site-header {
-  margin-bottom: 50px;
-}
+.site-header { margin-bottom: 50px; }
 
 .header-top {
   text-align: center;
   padding: 50px 0 30px 0;
-}
-
-.overline {
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .site-title {
-  margin: 0;
-  font-size: 2.8rem;
+  margin: 0 0 10px 0;
+  font-size: 3.2rem;
   font-weight: 400;
 }
 
@@ -80,10 +81,14 @@ h1, h2, h3, h4 {
   gap: 15px;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  color: var(--text);
+.logo { width: 45px; height: 45px; color: var(--text); }
+
+.sub-headline {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .nav-wrapper {
@@ -96,8 +101,12 @@ h1, h2, h3, h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Forces PC to stay on one line */
+  overflow-x: auto; /* Allows horizontal scroll if screen is too small */
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on mobile */
+  scrollbar-width: none; /* Hide scrollbar Firefox */
 }
+.main-nav::-webkit-scrollbar { display: none; /* Hide scrollbar Webkit */ }
 
 .main-nav a, .dark-toggle {
   color: var(--text);
@@ -109,30 +118,18 @@ h1, h2, h3, h4 {
   padding: 15px 25px;
   transition: color 0.2s, background 0.2s;
   border-right: 1px solid var(--border);
+  white-space: nowrap; /* Prevents text inside buttons from breaking */
+  flex-shrink: 0; /* Prevents buttons from squishing */
 }
 
-.main-nav a:first-child {
-  border-left: 1px solid var(--border);
-}
+.main-nav a:first-child { border-left: 1px solid var(--border); }
+.main-nav a:hover { color: var(--gold); background: var(--table-hover); }
 
-.main-nav a:hover {
-  color: var(--gold);
-  background: var(--table-hover);
-}
-
-.nav-nominate {
-  color: var(--gold) !important;
-  font-weight: 600;
-}
+.nav-nominate { color: var(--gold) !important; font-weight: 600; }
 
 .dark-toggle {
-  background: none;
-  cursor: pointer;
-  border-top: none;
-  border-bottom: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: none; cursor: pointer; border-top: none; border-bottom: none;
+  display: flex; align-items: center; justify-content: center;
 }
 .dark-toggle:hover { color: var(--gold); }
 .dark-toggle svg { width: 18px; height: 18px; }
@@ -148,10 +145,7 @@ a:hover { color: var(--text); }
 /* --- CONTROLS & INPUTS --- */
 .registry-controls { margin-bottom: 30px; }
 .search-container { position: relative; margin-bottom: 20px; }
-.search-icon {
-  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-  color: var(--text-muted); width: 18px; height: 18px;
-}
+.search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 18px; height: 18px; }
 .search-bar {
   width: 100%; padding: 12px 20px 12px 45px; 
   border: 1px solid var(--border); background: transparent; 
@@ -161,33 +155,22 @@ a:hover { color: var(--text); }
 .search-bar:focus { outline: none; border-color: var(--gold); }
 
 .filter-options { display: flex; gap: 25px; flex-wrap: wrap; margin-top: 10px; }
-.custom-checkbox {
-  display: flex; align-items: center; gap: 8px; cursor: pointer;
-  font-size: 1rem; color: var(--text-muted);
-}
+.custom-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 1rem; color: var(--text-muted); }
 .custom-checkbox input { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer;}
 
-/* --- ACADEMIC TABLE (Journal Style) --- */
+/* --- ACADEMIC TABLE --- */
 .academic-table {
   width: 100%; border-collapse: collapse; 
-  border-top: 2px solid var(--ink);
-  border-bottom: 2px solid var(--ink);
+  border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
   margin-bottom: 40px;
 }
 .academic-table th {
-  padding: 15px 10px; text-align: left;
-  border-bottom: 1px solid var(--ink);
+  padding: 15px 10px; text-align: left; border-bottom: 1px solid var(--ink);
   font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;
   color: var(--text); font-weight: 600; cursor: pointer;
 }
-.academic-table td { 
-  padding: 15px 10px; 
-  border-bottom: 1px solid var(--border); 
-  vertical-align: top; 
-}
+.academic-table td { padding: 15px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
 .academic-table tr.main-row:hover { background: var(--table-hover); }
-
-/* Remove default link styling inside table titles */
 .academic-table td a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 1.2rem;}
 .academic-table td a:hover { color: var(--gold); }
 
@@ -195,56 +178,22 @@ a:hover { color: var(--text); }
 .type-badge {
   font-size: 0.75rem; padding: 2px 8px; border: 1px solid var(--border);
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--text-muted); font-family: sans-serif;
+  color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 .type-claimed { border-color: var(--gold); color: var(--gold); font-weight: bold; }
 
-.comment-icon {
-  display: flex; align-items: center; gap: 6px;
-  color: var(--text-muted); text-decoration: none !important;
-}
+.comment-icon { display: flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none !important; }
 .comment-icon:hover { color: var(--gold); }
 
 /* --- CONTENT BOXES --- */
-.meta-box, .comment-box { 
-  border-top: 2px solid var(--border); 
-  border-bottom: 1px solid var(--border); 
-  padding: 20px 0; margin-bottom: 20px; 
-}
-.coc-box {
-  border-left: 4px solid var(--gold);
-  padding: 5px 0 5px 25px; margin: 40px 0;
-  background: var(--table-hover);
-}
+.meta-box, .comment-box { border-top: 2px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; margin-bottom: 20px; }
+.coc-box { border-left: 4px solid var(--gold); padding: 5px 0 5px 25px; margin: 40px 0; background: var(--table-hover); }
 
 .site-footer {
   margin-top: 80px; padding: 40px 0; text-align: center;
-  border-top: 1px solid var(--border);
-  font-size: 0.9rem; color: var(--text-muted);
+  border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-muted);
 }
 
-/* Button variants */
 button.nav-submit {
-  font-family: 'Newsreader', serif;
-  font-size: 1rem; padding: 8px 16px; cursor: pointer;
-  border: 1px solid var(--border); background: transparent; color: var(--text);
-  transition: all 0.2s;
-}
-button.nav-submit:hover { border-color: var(--gold); color: var(--gold); }
-
-.partner-logo-container {
-  display: inline-block; padding: 15px; border: 1px solid var(--border);
-  margin-top: 10px; width: 30%; min-width: 180px; box-sizing: border-box;
-}
-.partner-logo { width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(1.2); transition: filter 0.3s; }
-.partner-logo-container:hover .partner-logo { filter: grayscale(0%); }
-html.dark-mode .partner-logo { filter: invert(1) hue-rotate(180deg) brightness(1.5) grayscale(100%); }
-html.dark-mode .partner-logo-container:hover .partner-logo { filter: invert(1) hue-rotate(180deg) brightness(1.5); }
-
-@media (max-width: 768px) {
-  .site-title { font-size: 2rem; }
-  .main-nav { border-left: none; border-right: none; }
-  .main-nav a, .dark-toggle { border: none; padding: 10px 15px; }
-  .table-responsive { width: 100%; overflow-x: auto; }
-  .academic-table { min-width: 600px; }
-}
+  font-family: 'Newsreader', serif; font-size: 1rem; padding: 8px 16px; cursor: pointer;
+  border:
