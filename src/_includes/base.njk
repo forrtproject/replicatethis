@@ -6,7 +6,6 @@
   <title>{{ title | default("Replicate This") }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Importing the elegant Newsreader font -->
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
   <script>
@@ -16,7 +15,6 @@
 <body>
   <header class="site-header">
     <div class="container header-top">
-      <div class="overline">A Community Registry for Scientific Verification</div>
       <h1 class="site-title">
         <a href="{{ '/' | url }}">
           <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -29,6 +27,8 @@
           Replicate This
         </a>
       </h1>
+      <!-- Moved below the title and changed class name -->
+      <div class="sub-headline">A Community Registry for Scientific Verification</div>
     </div>
     
     <div class="nav-wrapper">
