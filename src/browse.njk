@@ -2,6 +2,15 @@
 layout: base.njk
 title: Nominations Registry
 ---
+
+{% set journalNames = {
+  "JCRe": "JCRe",
+  "JRR": "Journal of Robustness Research",
+  "R2": "Replication Research",
+  "RC": "Rescience C",
+  "RX": "Rescience X"
+} %}
+
 <h1 style="margin-bottom: 5px;">Nominations Registry</h1>
 <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 25px;">
   A curated collection of distinguished research papers recognized by the community as highly valuable for replication or reproduction.
@@ -14,7 +23,6 @@ title: Nominations Registry
   </div>
   
   <div class="filter-options">
-    <!-- Type Filters -->
     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
       <span class="filter-group-title">Type:</span>
       <label class="custom-checkbox"><input type="checkbox" id="check-replication" checked> Replication</label>
@@ -24,7 +32,6 @@ title: Nominations Registry
 
     <div class="filter-divider"></div>
 
-    <!-- Target Journal Filters -->
     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
       <span class="filter-group-title">Target Journals:</span>
       <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="JCRe" checked> JCRe</label>
@@ -37,16 +44,25 @@ title: Nominations Registry
   </div>
 </div>
 
-<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;"><em>Hover over dotted column headers for descriptions. Click to sort.</em></p>
+<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;"><em>Click table headers to sort.</em></p>
 
 <div class="table-responsive">
   <table class="academic-table" id="registryTable">
     <thead>
       <tr>
-        <th onclick="sortTable(0)" title="Date the study was nominated" style="width: 110px;">Date &#x21D5;</th>
+        <th onclick="sortTable(0)" style="width: 130px;">
+          Date &#x21D5;
+          <span data-tooltip="Date the study was nominated"><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+        </th>
         <th onclick="sortTable(1)">Nominated Work &#x21D5;</th>
-        <th onclick="sortTable(2)" title="Reproduction: same data, Replication: different data">Type &#x21D5;</th>
-        <th title="Journal(s) to which the reproduction/replication can be submitted (see Partner Journals in 'About')">Target Journals</th>
+        <th onclick="sortTable(2)" style="width: 140px;">
+          Type &#x21D5;
+          <span data-tooltip="Reproduction: same data. Replication: different data."><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+        </th>
+        <th style="width: 180px;">
+          Target Journals
+          <span data-tooltip="Journals to which the reproduction or replication could be submitted"><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -69,7 +85,7 @@ title: Nominations Registry
         <td>
           {% if nom.targetJournals.length > 0 %}
             {% for journal in nom.targetJournals %}
-              <span class="journal-badge">{{ journal }}</span>
+              <span class="journal-badge" data-tooltip="{{ journalNames[journal] | default(journal) }}">{{ journal }}</span>
             {% endfor %}
           {% else %}
             <span style="color: var(--text-muted); font-size: 0.85rem;">—</span>
@@ -130,7 +146,6 @@ function runFilters() {
     }
 
     const searchMatch = text.includes(searchVal);
-
     row.style.display = (typeMatch && claimMatch && journalMatch && searchMatch) ? '' : 'none';
   });
 }
