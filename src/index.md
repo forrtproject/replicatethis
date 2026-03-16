@@ -27,6 +27,6 @@ templateEngineOverride: njk, md
 4. **Replicate:** Discuss and claim a nominated study, and replicate it alone or with fellow researchers.
 
 <div style="text-align: center; margin-top: 50px;">
-  <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" style="display: inline-block; padding: 12px 24px; border: 1px solid var(--gold); text-decoration: none; color: var(--gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Nominate a Study</a>
+  <a href="https://github.com/forrtproject/replicatethis/issues/new?template=nomination.yml" style="display: inline-block; padding: 12px 24px; border: 1px solid var(--gold); text-decoration: none; color: var(--gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Nominate a Study</a>
   <a href="{{ '/browse/' | url }}" style="display: inline-block; padding: 12px 24px; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Browse Registry</a>
 </div>
