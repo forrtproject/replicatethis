@@ -14,34 +14,44 @@ title: Nominations Registry
   </div>
   
   <div class="filter-options">
-    <label class="custom-checkbox">
-      <input type="checkbox" id="check-replication" checked>
-      Replication
-    </label>
-    <label class="custom-checkbox">
-      <input type="checkbox" id="check-reproduction" checked>
-      Reproduction
-    </label>
-    <label class="custom-checkbox">
-      <input type="checkbox" id="check-claimed">
-      Exclude Claimed Studies
-    </label>
+    <!-- Type Filters -->
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+      <span class="filter-group-title">Type:</span>
+      <label class="custom-checkbox"><input type="checkbox" id="check-replication" checked> Replication</label>
+      <label class="custom-checkbox"><input type="checkbox" id="check-reproduction" checked> Reproduction</label>
+      <label class="custom-checkbox"><input type="checkbox" id="check-claimed"> Exclude Claimed</label>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- Target Journal Filters -->
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+      <span class="filter-group-title">Target Journals:</span>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="JCRe" checked> JCRe</label>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="JRR" checked> JRR</label>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="R2" checked> R2</label>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="RC" checked> RC</label>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="RX" checked> RX</label>
+      <label class="custom-checkbox"><input type="checkbox" class="journal-cb" value="Unspecified" checked> Unspecified</label>
+    </div>
   </div>
 </div>
-<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;"><em>Click table headers to sort</em></p>
+
+<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;"><em>Hover over dotted column headers for descriptions. Click to sort.</em></p>
 
 <div class="table-responsive">
   <table class="academic-table" id="registryTable">
     <thead>
       <tr>
-        <th onclick="sortTable(0)" style="width: 120px;">Date &#x21D5;</th>
+        <th onclick="sortTable(0)" title="Date the study was nominated" style="width: 110px;">Date &#x21D5;</th>
         <th onclick="sortTable(1)">Nominated Work &#x21D5;</th>
-        <th onclick="sortTable(2)">Type &#x21D5;</th>
+        <th onclick="sortTable(2)" title="Reproduction: same data, Replication: different data">Type &#x21D5;</th>
+        <th title="Journal(s) to which the reproduction/replication can be submitted (see Partner Journals in 'About')">Target Journals</th>
       </tr>
     </thead>
     <tbody>
       {% for nom in nominations %}
-      <tr class="main-row" data-type="{{ nom.type }}" data-claimed="{{ nom.isClaimed }}">
+      <tr class="main-row" data-type="{{ nom.type }}" data-claimed="{{ nom.isClaimed }}" data-journals="{{ nom.targetJournals | join(',') }}">
         <td data-sort="{{ nom.date }}">{{ nom.formattedDate }}</td>
         <td>
           <strong style="font-size: 1.05rem;">
@@ -56,10 +66,19 @@ title: Nominations Registry
         <td>
           <span class="type-badge type-{{ nom.type | lower }}">{{ nom.type }}</span>
         </td>
+        <td>
+          {% if nom.targetJournals.length > 0 %}
+            {% for journal in nom.targetJournals %}
+              <span class="journal-badge">{{ journal }}</span>
+            {% endfor %}
+          {% else %}
+            <span style="color: var(--text-muted); font-size: 0.85rem;">—</span>
+          {% endif %}
+        </td>
       </tr>
       {% else %}
       <tr>
-        <td colspan="3" style="text-align: center; padding: 30px;">
+        <td colspan="4" style="text-align: center; padding: 30px;">
           <em>No approved nominations found yet. Check back soon or submit one!</em>
         </td>
       </tr>
@@ -69,17 +88,18 @@ title: Nominations Registry
 </div>
 
 <script>
-// Attach Event Listeners
 document.getElementById('searchInput').addEventListener('keyup', runFilters);
 document.getElementById('check-replication').addEventListener('change', runFilters);
 document.getElementById('check-reproduction').addEventListener('change', runFilters);
 document.getElementById('check-claimed').addEventListener('change', runFilters);
+document.querySelectorAll('.journal-cb').forEach(cb => cb.addEventListener('change', runFilters));
 
 function runFilters() {
   const searchVal = document.getElementById('searchInput').value.toLowerCase();
   const showRep = document.getElementById('check-replication').checked;
   const showRepro = document.getElementById('check-reproduction').checked;
   const excludeClaimed = document.getElementById('check-claimed').checked;
+  const checkedJournals = Array.from(document.querySelectorAll('.journal-cb:checked')).map(cb => cb.value);
   
   const rows = document.querySelectorAll('.main-row');
 
@@ -87,6 +107,8 @@ function runFilters() {
     const text = row.innerText.toLowerCase();
     const type = row.getAttribute('data-type');
     const isClaimed = row.getAttribute('data-claimed') === 'true';
+    const rowJournalsRaw = row.getAttribute('data-journals');
+    const rowJournals = rowJournalsRaw ? rowJournalsRaw.split(',') : [];
 
     let typeMatch = false;
     if (showRep && type === 'Replication') typeMatch = true;
@@ -95,9 +117,21 @@ function runFilters() {
     let claimMatch = true;
     if (excludeClaimed && isClaimed) claimMatch = false;
 
+    let journalMatch = false;
+    if (rowJournals.length === 0) {
+      if (checkedJournals.includes('Unspecified')) journalMatch = true;
+    } else {
+      for (let j of rowJournals) {
+        if (checkedJournals.includes(j)) {
+          journalMatch = true;
+          break;
+        }
+      }
+    }
+
     const searchMatch = text.includes(searchVal);
 
-    row.style.display = (typeMatch && claimMatch && searchMatch) ? '' : 'none';
+    row.style.display = (typeMatch && claimMatch && journalMatch && searchMatch) ? '' : 'none';
   });
 }
 
