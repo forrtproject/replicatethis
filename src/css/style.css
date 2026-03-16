@@ -196,4 +196,26 @@ a:hover { color: var(--text); }
 
 button.nav-submit {
   font-family: 'Newsreader', serif; font-size: 1rem; padding: 8px 16px; cursor: pointer;
-  border:
+  border: 1px solid var(--border); background: transparent; color: var(--text);
+  transition: all 0.2s;
+}
+button.nav-submit:hover { border-color: var(--gold); color: var(--gold); }
+
+.partner-logo-container {
+  display: inline-block; padding: 15px; border: 1px solid var(--border);
+  margin-top: 10px; width: 30%; min-width: 180px; box-sizing: border-box;
+}
+.partner-logo { width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(1.2); transition: filter 0.3s; }
+.partner-logo-container:hover .partner-logo { filter: grayscale(0%); }
+html.dark-mode .partner-logo { filter: invert(1) hue-rotate(180deg) brightness(1.5) grayscale(100%); }
+html.dark-mode .partner-logo-container:hover .partner-logo { filter: invert(1) hue-rotate(180deg) brightness(1.5); }
+
+@media (max-width: 768px) {
+  .site-title { font-size: 2.2rem; }
+  /* On mobile, align nav to the left so it's obvious you can swipe it */
+  .main-nav { justify-content: flex-start; } 
+  .main-nav a, .dark-toggle { padding: 12px 15px; }
+  .main-nav a:first-child { border-left: none; } /* Remove left border on mobile swipe for cleaner edge */
+  .table-responsive { width: 100%; overflow-x: auto; }
+  .academic-table { min-width: 600px; }
+}
