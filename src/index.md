@@ -4,15 +4,28 @@ title: Replicate This
 templateEngineOverride: njk, md
 ---
 
-# Welcome to Replicate This
+<div style="text-align: center; max-width: 700px; margin: 0 auto 60px auto;">
 
-A community-driven, public registry for nominating published research papers that merit independent verification through replication or reproduction.
+  <h2 style="font-size: 2.2rem; font-style: italic; line-height: 1.4; margin-bottom: 30px;">
+    Informing the scientific process through collaborative reproduction and replication.
+  </h2>
 
-[**Browse Nominations &rarr;**]({{ '/browse/' | url }})  
-[**Nominate a Study for Replication &rarr;**](https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml)
+  <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 40px;">
+    An ongoing community registry for nominating published research papers that merit independent verification across all disciplines.
+  </p>
 
-### How it works
+</div>
+
+<hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 40px;">
+
+<h3 style="text-align: center; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; margin-bottom: 30px;">How it works</h3>
+
 1. **Nominate:** Submit a structured GitHub Issue detailing a paper's DOI and why it should be replicated.
 2. **Moderate:** Maintainers review submissions for scientific merit and adherence to our Code of Conduct.
 3. **Publish:** Approved nominations are automatically indexed on this website and leaderboards are updated.
 4. **Replicate:** Discuss and claim a nominated study, and replicate it alone or with fellow researchers.
+
+<div style="text-align: center; margin-top: 50px;">
+  <a href="https://github.com/LukasRoeseler/replicatethis/issues/new?template=nomination.yml" style="display: inline-block; padding: 12px 24px; border: 1px solid var(--gold); text-decoration: none; color: var(--gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 15px;">Nominate a Study</a>
+  <a href="{{ '/browse/' | url }}" style="display: inline-block; padding: 12px 24px; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Browse Registry</a>
+</div>
