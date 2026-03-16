@@ -2,20 +2,21 @@
 
 A serverless, GitHub-based website for nominating research papers for replication.
 
-## Deployment Instructions
-1. Upload all these files to a new GitHub repository.
-2. Go to **Settings > Pages**. Under "Build and deployment", set **Source** to **GitHub Actions**.
-3. Go to **Settings > General** and ensure "Issues" is enabled.
-4. Go to **Issues > Labels** and create `status: approved`, `status: pending`, `status: rejected`, etc.
-5. Edit `src/submit.md` to point to your repository's issue URL.
-6. The GitHub Action will run automatically and deploy the site.
+## Nomination Instructions
+1. Pick a study to nominate.
+2. Open an issue in the project (https://github.com/forrtproject/replicatethis/issues/new?template=nomination.yml).
+3. Wait for moderators to change status label to "approved". It will then automatically appear on the website.
 
-## How to Moderate Nominations
+## Claiming Instructions
+1. Choose a nominated study that you would like to reproduce/replicate.
+2. Go to the nomination entry, scroll down, and comment on it, that you want to claim it (comment must include claim).
+3. The status of the nomination will change to `status: claimed`. Other researchers may reach out to you for cooperation
+4. Comment again once you posted the results as a preprint. The nomination will then be closed.
+
+## How to Moderate Nominations (for project admins only)
 1. When a user submits via the Issue form, it is assigned `status: pending`.
 2. Review the issue against the Code of Conduct.
 3. If valid, remove `status: pending` and assign `status: approved`.
 4. Add any optional tags (e.g., `type: replication`, `discipline: economics`).
 5. The GitHub Action will immediately trigger, fetch the updated approved issues, and deploy the new version of the website.
 
-## Local Development
-Run `npm install`, then run `npm run serve`. A local server will start at `http://localhost:8080`.
