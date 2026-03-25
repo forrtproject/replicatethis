@@ -24,8 +24,9 @@ async function fetchIssues() {
       const parsed = parseIssueBody(issue.body);
       const repType = labels.includes('type: replication') ? 'Replication' : 'Reproduction';
       const isClaimed = labels.includes('claimed');
+      const seekingCollab = labels.includes('seeking collaborators'); // New Collaborator flag
+      const upvotes = issue.reactions ? issue.reactions['+1'] : 0; // Fetch GitHub Thumbs Up
       
-      // Extract target journals (e.g., "journal: JCRe" -> "JCRe")
       const targetJournals = [];
       issue.labels.forEach(l => {
         if (l.name.toLowerCase().startsWith('journal:')) {
@@ -52,6 +53,8 @@ async function fetchIssues() {
         formattedDate: new Date(issue.created_at).toLocaleDateString(),
         type: repType,
         isClaimed: isClaimed,
+        seekingCollab: seekingCollab,
+        upvotes: upvotes,
         targetJournals: targetJournals,
         nominator: issue.user.login,
         commentCount: issue.comments,
