@@ -51,17 +51,27 @@ title: Nominations Registry
   <table class="academic-table" id="registryTable">
     <thead>
       <tr>
-        <th onclick="sortTable(0, 'number')" style="width: 80px; text-align: center;" title="Number of upvotes (GitHub thumbs up)">▲<br>Votes</th>
-        <th onclick="sortTable(1, 'date')" style="width: 110px;">Date &#x21D5;</th>
+        <th onclick="sortTable(0, 'number')" style="width: 100px; text-align: center;">
+          <span data-tooltip="Number of researchers who agree this study merits replication (GitHub thumbs up)">Endorsements &#x21D5;</span>
+        </th>
+        <th onclick="sortTable(1, 'date')" style="width: 110px;">
+          <span data-tooltip="Date the study was nominated">Date &#x21D5;</span>
+        </th>
         <th onclick="sortTable(2, 'string')">Nominated Work &#x21D5;</th>
-        <th onclick="sortTable(3, 'string')" style="width: 140px;">Type &#x21D5;</th>
-        <th style="width: 180px;">Target Journals</th>
+        <th onclick="sortTable(3, 'string')" style="width: 140px;">
+          <span data-tooltip="Reproduction: same data. Replication: different data.">Type &#x21D5;</span>
+        </th>
+        <th style="width: 180px;">
+          <span data-tooltip="Journals to which the reproduction or replication could be submitted">Target Journals</span>
+        </th>
       </tr>
     </thead>
     <tbody>
       {% for nom in nominations %}
       <tr class="main-row" data-type="{{ nom.type }}" data-claimed="{{ nom.isClaimed }}" data-collab="{{ nom.seekingCollab }}" data-journals="{{ nom.targetJournals | join(',') }}">
-        <td class="upvote-cell" data-sort="{{ nom.upvotes }}">{{ nom.upvotes }}</td>
+        <td class="upvote-cell" data-sort="{{ nom.upvotes }}">
+          {% if nom.upvotes > 0 %}<span style="color: var(--gold);">{{ nom.upvotes }}</span>{% else %}0{% endif %}
+        </td>
         <td data-sort="{{ nom.date }}">{{ nom.formattedDate }}</td>
         <td>
           <strong style="font-size: 1.05rem;">
@@ -159,20 +169,17 @@ function sortTable(colIndex, sortType) {
     let valA = a.cells[colIndex].innerText.trim();
     let valB = b.cells[colIndex].innerText.trim();
     
-    // Use data-sort attribute if it exists (crucial for dates and numbers)
     if (a.cells[colIndex].hasAttribute('data-sort')) {
       valA = a.cells[colIndex].getAttribute('data-sort');
       valB = b.cells[colIndex].getAttribute('data-sort');
     }
 
-    // Number sorting logic
     if (sortType === 'number') {
       valA = parseInt(valA) || 0;
       valB = parseInt(valB) || 0;
       return sortAsc ? valA - valB : valB - valA;
     }
 
-    // String/Date sorting logic
     if (valA < valB) return sortAsc ? -1 : 1;
     if (valA > valB) return sortAsc ? 1 : -1;
     return 0;
