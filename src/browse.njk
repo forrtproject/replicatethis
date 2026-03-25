@@ -28,6 +28,7 @@ title: Nominations Registry
       <label class="custom-checkbox"><input type="checkbox" id="check-replication" checked> Replication</label>
       <label class="custom-checkbox"><input type="checkbox" id="check-reproduction" checked> Reproduction</label>
       <label class="custom-checkbox"><input type="checkbox" id="check-claimed"> Exclude Claimed</label>
+      <label class="custom-checkbox"><input type="checkbox" id="check-collab"> <span style="color: #3b82f6;">🤝 Seeking Collaborators</span></label>
     </div>
 
     <div class="filter-divider"></div>
@@ -50,24 +51,17 @@ title: Nominations Registry
   <table class="academic-table" id="registryTable">
     <thead>
       <tr>
-        <th onclick="sortTable(0)" style="width: 130px;">
-          Date &#x21D5;
-          <span data-tooltip="Date the study was nominated"><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-        </th>
-        <th onclick="sortTable(1)">Nominated Work &#x21D5;</th>
-        <th onclick="sortTable(2)" style="width: 140px;">
-          Type &#x21D5;
-          <span data-tooltip="Reproduction: same data. Replication: different data."><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-        </th>
-        <th style="width: 180px;">
-          Target Journals
-          <span data-tooltip="Journals to which the reproduction or replication could be submitted"><svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-        </th>
+        <th onclick="sortTable(0, 'number')" style="width: 80px; text-align: center;" title="Number of upvotes (GitHub thumbs up)">▲<br>Votes</th>
+        <th onclick="sortTable(1, 'date')" style="width: 110px;">Date &#x21D5;</th>
+        <th onclick="sortTable(2, 'string')">Nominated Work &#x21D5;</th>
+        <th onclick="sortTable(3, 'string')" style="width: 140px;">Type &#x21D5;</th>
+        <th style="width: 180px;">Target Journals</th>
       </tr>
     </thead>
     <tbody>
       {% for nom in nominations %}
-      <tr class="main-row" data-type="{{ nom.type }}" data-claimed="{{ nom.isClaimed }}" data-journals="{{ nom.targetJournals | join(',') }}">
+      <tr class="main-row" data-type="{{ nom.type }}" data-claimed="{{ nom.isClaimed }}" data-collab="{{ nom.seekingCollab }}" data-journals="{{ nom.targetJournals | join(',') }}">
+        <td class="upvote-cell" data-sort="{{ nom.upvotes }}">{{ nom.upvotes }}</td>
         <td data-sort="{{ nom.date }}">{{ nom.formattedDate }}</td>
         <td>
           <strong style="font-size: 1.05rem;">
@@ -75,6 +69,9 @@ title: Nominations Registry
           </strong>
           {% if nom.isClaimed %}
             <span class="type-badge type-claimed" style="margin-left: 5px;">CLAIMED ✍️</span>
+          {% endif %}
+          {% if nom.seekingCollab %}
+            <span class="type-badge type-collab" style="margin-left: 5px;">🤝 COLLAB NEEDED</span>
           {% endif %}
           <br>
           <span style="font-size: 0.85rem; color: var(--text-muted);">{{ nom.Journal }} | {{ nom.Discipline }}</span>
@@ -94,7 +91,7 @@ title: Nominations Registry
       </tr>
       {% else %}
       <tr>
-        <td colspan="4" style="text-align: center; padding: 30px;">
+        <td colspan="5" style="text-align: center; padding: 30px;">
           <em>No approved nominations found yet. Check back soon or submit one!</em>
         </td>
       </tr>
@@ -108,6 +105,7 @@ document.getElementById('searchInput').addEventListener('keyup', runFilters);
 document.getElementById('check-replication').addEventListener('change', runFilters);
 document.getElementById('check-reproduction').addEventListener('change', runFilters);
 document.getElementById('check-claimed').addEventListener('change', runFilters);
+document.getElementById('check-collab').addEventListener('change', runFilters);
 document.querySelectorAll('.journal-cb').forEach(cb => cb.addEventListener('change', runFilters));
 
 function runFilters() {
@@ -115,6 +113,7 @@ function runFilters() {
   const showRep = document.getElementById('check-replication').checked;
   const showRepro = document.getElementById('check-reproduction').checked;
   const excludeClaimed = document.getElementById('check-claimed').checked;
+  const onlyCollab = document.getElementById('check-collab').checked;
   const checkedJournals = Array.from(document.querySelectorAll('.journal-cb:checked')).map(cb => cb.value);
   
   const rows = document.querySelectorAll('.main-row');
@@ -123,6 +122,7 @@ function runFilters() {
     const text = row.innerText.toLowerCase();
     const type = row.getAttribute('data-type');
     const isClaimed = row.getAttribute('data-claimed') === 'true';
+    const isCollab = row.getAttribute('data-collab') === 'true';
     const rowJournalsRaw = row.getAttribute('data-journals');
     const rowJournals = rowJournalsRaw ? rowJournalsRaw.split(',') : [];
 
@@ -133,38 +133,51 @@ function runFilters() {
     let claimMatch = true;
     if (excludeClaimed && isClaimed) claimMatch = false;
 
+    let collabMatch = true;
+    if (onlyCollab && !isCollab) collabMatch = false;
+
     let journalMatch = false;
     if (rowJournals.length === 0) {
       if (checkedJournals.includes('Unspecified')) journalMatch = true;
     } else {
       for (let j of rowJournals) {
-        if (checkedJournals.includes(j)) {
-          journalMatch = true;
-          break;
-        }
+        if (checkedJournals.includes(j)) { journalMatch = true; break; }
       }
     }
 
     const searchMatch = text.includes(searchVal);
-    row.style.display = (typeMatch && claimMatch && journalMatch && searchMatch) ? '' : 'none';
+    row.style.display = (typeMatch && claimMatch && collabMatch && journalMatch && searchMatch) ? '' : 'none';
   });
 }
 
 let sortAsc = true;
-function sortTable(colIndex) {
+function sortTable(colIndex, sortType) {
   const tbody = document.querySelector("#registryTable tbody");
   const rowsArray = Array.from(tbody.querySelectorAll('.main-row'));
+  
   rowsArray.sort((a, b) => {
     let valA = a.cells[colIndex].innerText.trim();
     let valB = b.cells[colIndex].innerText.trim();
-    if (colIndex === 0) {
+    
+    // Use data-sort attribute if it exists (crucial for dates and numbers)
+    if (a.cells[colIndex].hasAttribute('data-sort')) {
       valA = a.cells[colIndex].getAttribute('data-sort');
       valB = b.cells[colIndex].getAttribute('data-sort');
     }
+
+    // Number sorting logic
+    if (sortType === 'number') {
+      valA = parseInt(valA) || 0;
+      valB = parseInt(valB) || 0;
+      return sortAsc ? valA - valB : valB - valA;
+    }
+
+    // String/Date sorting logic
     if (valA < valB) return sortAsc ? -1 : 1;
     if (valA > valB) return sortAsc ? 1 : -1;
     return 0;
   });
+  
   sortAsc = !sortAsc;
   rowsArray.forEach(row => tbody.appendChild(row));
 }
