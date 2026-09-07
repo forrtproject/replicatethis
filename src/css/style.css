@@ -317,6 +317,39 @@ button.nav-submit:hover { border-color: var(--gold); color: var(--gold); }
   .filter-divider { display: none; }
 }
 
+/* --- WIP / PROTOTYPE RIBBON --- */
+.wip-ribbon { position: fixed; top: 0; right: 0; width: 160px; height: 160px; overflow: hidden; pointer-events: none; z-index: 1050; }
+.wip-ribbon .wip-ribbon-inner {
+  position: absolute; top: 32px; right: -46px; width: 220px; transform: rotate(45deg);
+  background: linear-gradient(135deg, #d85a3a 0%, #c0421e 100%); color: #fff;
+  text-align: center; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.14em; padding: 0.55rem 0; box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  pointer-events: auto; border-top: 1px dashed rgba(255,255,255,0.45);
+  border-bottom: 1px dashed rgba(255,255,255,0.45); cursor: help; user-select: none;
+}
+.wip-ribbon .wip-ribbon-inner::before, .wip-ribbon .wip-ribbon-inner::after {
+  content: ""; position: absolute; top: 100%; border: 5px solid transparent; border-top-color: #7a2a12;
+}
+.wip-ribbon .wip-ribbon-inner::before { left: 10px; border-right-color: #7a2a12; }
+.wip-ribbon .wip-ribbon-inner::after  { right: 10px; border-left-color: #7a2a12; }
+html.dark-mode .wip-ribbon .wip-ribbon-inner { background: linear-gradient(135deg, #c94b2a 0%, #a5361a 100%); box-shadow: 0 3px 10px rgba(0,0,0,0.5); }
+.wip-ribbon-tip {
+  position: fixed; top: 70px; right: 18px; max-width: 260px;
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-left: 4px solid #c0421e; border-radius: 8px;
+  padding: 0.75rem 0.9rem; font-size: 0.85rem; line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  opacity: 0; transform: translateY(-4px); pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease; z-index: 1049;
+}
+.wip-ribbon:hover + .wip-ribbon-tip, .wip-ribbon-tip:hover { opacity: 1; transform: translateY(0); pointer-events: auto; }
+@media (max-width: 600px) {
+  .wip-ribbon { width: 120px; height: 120px; }
+  .wip-ribbon .wip-ribbon-inner { top: 22px; right: -58px; width: 200px; font-size: 0.68rem; padding: 0.4rem 0; }
+  .wip-ribbon-tip { max-width: 220px; top: 56px; right: 8px; font-size: 0.8rem; }
+}
+
 /* --- PARTNER LOGOS --- */
 .partner-logo-container {
   display: inline-block; 
