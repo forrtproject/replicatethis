@@ -1,4 +1,20 @@
-# Replicate This
+# Replicate This legacy registry
+
+This repository preserves the original GitHub-issues nomination prototype.
+Development continues in [Replicate This v2](https://github.com/forrtproject/replicate-this).
+After archival, new nominations, claims, and result updates cannot be posted here;
+use the current project's documented participation route instead.
+
+The [legacy nomination issues](https://github.com/forrtproject/replicatethis/issues)
+remain readable, including the approved nominations in #1, #3, #5–8, #10, and #11,
+the business-research nominations source in #9, and collaboration context in #1.
+These records have not been verified as imported into v2; this archive preserves
+their provenance rather than asserting that a migration is complete.
+
+The instructions below document the historical workflow and do not apply to new
+contributions.
+
+## Historical prototype
 
 A serverless, GitHub-based website for nominating research papers for replication.
 
